@@ -1,6 +1,11 @@
-﻿using System;
+﻿using AplicativoMicro.Persistencias;
+using Micro_OndasAPI.Models;
+using Micro_OndasAPI.Models.Programa;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -9,18 +14,25 @@ namespace AplicativoMicro
 {
     public partial class MicroOndas : System.Web.UI.Page
     {
-         int minutos;
+        int minutos;
         int segundos;
         int potencia;
         string tempo_digitado;
         string caractere;
         bool input;
         bool pausa;
+        bool programa_rapido = false;
+        int usuario_id;
+
+        List<ProgramaModel> lista = new List<ProgramaModel>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            btn0.Enabled = false;
+            usuario_id = int.Parse(Request.QueryString["usuarioId"]);
             if (!IsPostBack)
             {
+                HttpStatusCode http;
                 Timer1.Enabled = false;
                 minutos = 0;
                 segundos = 0;
@@ -37,10 +49,87 @@ namespace AplicativoMicro
                 Session["caractere"] = caractere;
                 Session["input"] = input;
                 Session["pausa"] = pausa;
+                Session["programa_rapido"] = programa_rapido;
 
                 lblPotencia.Text = "Potência: 10";
                 lblTempoPotencia.Text = "";
                 lbVisor.Text = "00:00";
+
+                lista.Add(new ProgramaModel { id = 0, nome = "Pipoca", alimento = "Pipoca (de micro-ondas)",caractere_animacao = "0", tempo = 300, potencia = 7, descricao = "Observar o barulho de estouros do milho, caso houver um intervalo de mais de 10 segundos entre um estouro e outro, interrompa o aquecimento." });
+                lista.Add(new ProgramaModel { id = 0, nome = "Leite", alimento = "Leite", tempo = 500, potencia = 5, caractere_animacao = "1", descricao = "Cuidado com aquecimento de líquidos, o choque térmico aliado ao movimento do recipiente pode causar fervura imediata causando risco de queimaduras." });
+                lista.Add(new ProgramaModel { id = 0, nome = "Carnes de boi", alimento = "Carne em pedaço ou fatias", caractere_animacao = "2", tempo = 1400, potencia = 4, descricao = "Interrompa o processo na metade e vire o conteúdo com a parte de baixo para cima para o descongelamento uniforme" });
+                lista.Add(new ProgramaModel { id = 0, nome = "Frango", alimento = "Frango (qualquer corte)", caractere_animacao = "3", tempo = 800, potencia = 7, descricao = "Interrompa o processo na metade e vire o conteúdo com a parte de baixo para cima para o descongelamento uniforme." });
+                lista.Add(new ProgramaModel { id = 0, nome = "Feijão", alimento = "Feijão congelado", caractere_animacao = "4", tempo = 800, potencia = 9, descricao = "Deixe o recipiente destampado e em casos de plástico, cuidado ao retirar o recipiente pois o mesmo pode perder resistência em altas temperaturas." });
+                
+                ProgramaPersistencia programa = new ProgramaPersistencia();
+                RetornoPadraoModel retorno = programa.Listar(usuario_id,out http);
+                if (retorno.Status) {
+                    var json = JsonConvert.DeserializeObject<List<ProgramaModel>>(retorno.Data.ToString());
+                    foreach (ProgramaModel programaM in json)
+                    {
+                        lista.Add(programaM);
+                    }
+                }
+                
+                gvProgramacoes.DataSource = lista;
+                gvProgramacoes.DataBind();
+
+            }
+        }
+
+        protected void gvProgramacoes_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                ProgramaModel item = (ProgramaModel)e.Row.DataItem;
+                if (item.id != 0)
+                {
+                    e.Row.Font.Bold = true;
+                }
+            }
+        }
+
+
+        protected void gvProgramacoes_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "Usar")
+            {
+                lblTempoPotencia.Text = "";
+                tempo_digitado = "";
+                AtualizaVisor();
+                potencia = 10;
+                lblPotencia.Text = "Potência: 10";
+                input = false;
+                pausa = false;
+                programa_rapido = true;
+                SalvaEstado();
+
+                int index = Convert.ToInt32(e.CommandArgument);
+                GridViewRow row = gvProgramacoes.Rows[index];
+
+                string nome = row.Cells[0].Text;
+                string tempo = row.Cells[2].Text;
+                if (row.Cells[3].Text != "")
+                {
+                    potencia = int.Parse(row.Cells[3].Text);
+                }
+                else {
+                    potencia = 10;
+                }
+
+                if (row.Cells[5].Text != "&nbsp;")
+                {
+                    caractere = row.Cells[5].Text;
+                }
+                else
+                {
+                    caractere = ".";
+                }
+
+                    tempo_digitado = tempo;
+                lblPotencia.Text = $"Potência: {potencia}";
+                AtualizaVisor();
+                SalvaEstado();
             }
         }
 
@@ -53,6 +142,11 @@ namespace AplicativoMicro
             caractere = (string)Session["caractere"];
             input = (bool)Session["input"];
             pausa = (bool)Session["pausa"];
+            programa_rapido = (bool)Session["programa_rapido"];
+            bloquearBotoes();
+
+
+
         }
 
         private void SalvaEstado()
@@ -64,18 +158,71 @@ namespace AplicativoMicro
             Session["caractere"] = caractere;
             Session["input"] = input;
             Session["pausa"] = pausa;
+            Session["programa_rapido"] = programa_rapido;
+        }
+
+        public void bloquearBotoes() {
+            if (programa_rapido)
+            {
+                btn0.Enabled = false;
+                btn1.Enabled = false;
+                btn2.Enabled = false;
+                btn3.Enabled = false;
+                btn4.Enabled = false;
+                btn5.Enabled = false;
+                btn6.Enabled = false;
+                btn7.Enabled = false;
+                btn8.Enabled = false;
+                btn9.Enabled = false;
+                btnComecar.Enabled = false;
+                btnFuncao.Enabled = false;
+                btnPotencia.Enabled = false;
+                gvProgramacoes.Enabled = false;
+            }
+            else {
+                btn0.Enabled = true;
+                btn1.Enabled = true;
+                btn2.Enabled = true;
+                btn3.Enabled = true;
+                btn4.Enabled = true;
+                btn5.Enabled = true;
+                btn6.Enabled = true;
+                btn7.Enabled = true;
+                btn8.Enabled = true;
+                btn9.Enabled = true;
+                btnFuncao.Enabled = true;
+                btnPotencia.Enabled = true;
+                btnComecar.Enabled = true;
+                gvProgramacoes.Enabled = true;
+            }
+
         }
 
         private void adicionaNumero(int botao_numero)
         {
+            if (programa_rapido) { return; }
             AtualizaEstado();
+
             if (tempo_digitado.Length < 4)
             {
                 tempo_digitado += botao_numero;
                 AtualizaVisor();
+
+                if ((minutos >= 2 && segundos > 0) || minutos > 2)
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('Digite um valor menor que 2 minutos.');", true);
+                    tempo_digitado = "";
+                    AtualizaVisor();
+                    SalvaEstado();
+                    return;
+                }
+
             }
             else
             {
+                tempo_digitado = "";
+                AtualizaVisor();
+                SalvaEstado();
                 ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('Existe mais de quatro números digitados...');", true);
             }
             SalvaEstado();
@@ -100,7 +247,7 @@ namespace AplicativoMicro
         private void InicioRapido()
         {
             tempo_digitado = "";
-            if (!pausa)
+            if (!pausa && !programa_rapido)
             {
                 lblTempoPotencia.Text = "";
                 segundos += 30;
@@ -127,8 +274,10 @@ namespace AplicativoMicro
             {
                 Timer1.Enabled = false;
                 potencia = 10;
+                caractere = ".";
                 lblPotencia.Text = "Potência: 10";
                 lblTempoPotencia.Text += "Aquecimento concluido";
+                programa_rapido = false;
                 SalvaEstado();
                 return;
             }
@@ -141,14 +290,15 @@ namespace AplicativoMicro
                     segundos = 59;
                 }
             }
-            else
-            {
-                segundos--;
-                lblTempoPotencia.Text += new string(char.Parse(caractere), potencia) + " ";
-            }
+            segundos--;
+            lblTempoPotencia.Text += new string(char.Parse(caractere), potencia) + " ";
 
             lbVisor.Text = $"{minutos:00}:{segundos:00}";
             SalvaEstado();
+        }
+
+        protected void btnMenu_Click(object sender, EventArgs e) {
+            Response.Redirect($"CriarAquecimento.aspx?usuarioId={usuario_id}");
         }
 
         protected void btnComecar_Click(object sender, EventArgs e)
@@ -157,13 +307,6 @@ namespace AplicativoMicro
 
             if (!input || minutos == 0 && segundos == 0)
                 InicioRapido();
-
-            if ((minutos >= 2 && segundos > 0) || minutos > 2)
-            {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alert", "alert('Digite um valor menor que 2 minutos.');", true);
-                SalvaEstado();
-                return;
-            }
 
             tempo_digitado = "";
             Timer1.Enabled = true;
@@ -177,6 +320,7 @@ namespace AplicativoMicro
 
             if (pausa || (segundos <= 0 && minutos <= 0))
             {
+                programa_rapido = false;
                 lblTempoPotencia.Text = "";
                 tempo_digitado = "";
                 AtualizaVisor();
@@ -184,6 +328,7 @@ namespace AplicativoMicro
                 lblPotencia.Text = "Potência: 10";
                 input = false;
                 pausa = false;
+                
                 SalvaEstado();
                 return;
             }
@@ -195,6 +340,7 @@ namespace AplicativoMicro
 
         protected void btnPotencia_Click(object sender, EventArgs e)
         {
+
             AtualizaEstado();
             try
             {
@@ -222,9 +368,10 @@ namespace AplicativoMicro
                 input = false;
 
             SalvaEstado();
+            
         }
 
-        #region Botões Numéricos
+        
 
         protected void btn0_Click(object sender, EventArgs e) => adicionaNumero(0);
         protected void btn1_Click(object sender, EventArgs e) => adicionaNumero(1);
@@ -237,7 +384,7 @@ namespace AplicativoMicro
         protected void btn8_Click(object sender, EventArgs e) => adicionaNumero(8);
         protected void btn9_Click(object sender, EventArgs e) => adicionaNumero(9);
 
-        #endregion
+       
 
     }
 }

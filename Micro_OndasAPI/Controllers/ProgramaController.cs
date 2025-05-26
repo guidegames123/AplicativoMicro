@@ -24,7 +24,7 @@ namespace Micro_OndasAPI.Controllers
         }
 
         [HttpGet]
-        [Route("listar")]
+        [Route("Listar")]
         public RetornoPadraoModel Listar(int usuario_id)
         {
             ProgramasPersistencia programa = new ProgramasPersistencia();

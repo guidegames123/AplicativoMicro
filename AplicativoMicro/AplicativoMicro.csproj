@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Telas\CriarAquecimento.aspx" />
     <Content Include="Telas\Cadastrar.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -197,6 +198,14 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Persistencias\ProgramaPersistencia.cs" />
+    <Compile Include="Telas\CriarAquecimento.aspx.cs">
+      <DependentUpon>CriarAquecimento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Telas\CriarAquecimento.aspx.designer.cs">
+      <DependentUpon>CriarAquecimento.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Telas\Cadastrar.aspx.cs">
       <DependentUpon>Cadastrar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -273,6 +282,12 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Micro_OndasAPI\Micro_OndasAPI.csproj">
+      <Project>{6F75B6B4-96BF-43C7-9C70-DDA3ED6F9B77}</Project>
+      <Name>Micro_OndasAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -7,11 +7,11 @@
 // </gerado automaticamente>
 //------------------------------------------------------------------------------
 
-namespace AplicativoMicro
+namespace AplicativoMicro.Telas
 {
 
 
-    public partial class MicroOndas
+    public partial class CriarAquecimento
     {
 
         /// <summary>
@@ -24,183 +24,129 @@ namespace AplicativoMicro
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Controle ScriptManager1.
+        /// Controle Label3.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::System.Web.UI.WebControls.Label Label3;
 
         /// <summary>
-        /// Controle Timer1.
+        /// Controle txtNome.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.Timer Timer1;
+        protected global::System.Web.UI.WebControls.TextBox txtNome;
 
         /// <summary>
-        /// Controle lbVisor.
+        /// Controle Label1.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbVisor;
+        protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// Controle btn7.
+        /// Controle txtAlimento.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn7;
+        protected global::System.Web.UI.WebControls.TextBox txtAlimento;
 
         /// <summary>
-        /// Controle btn8.
+        /// Controle Label2.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn8;
+        protected global::System.Web.UI.WebControls.Label Label2;
 
         /// <summary>
-        /// Controle btn9.
+        /// Controle txtPotencia.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn9;
+        protected global::System.Web.UI.WebControls.TextBox txtPotencia;
 
         /// <summary>
-        /// Controle btn4.
+        /// Controle Label4.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn4;
+        protected global::System.Web.UI.WebControls.Label Label4;
 
         /// <summary>
-        /// Controle btn5.
+        /// Controle txtCaractereAnimecao.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn5;
+        protected global::System.Web.UI.WebControls.TextBox txtCaractereAnimecao;
 
         /// <summary>
-        /// Controle btn6.
+        /// Controle Label5.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn6;
+        protected global::System.Web.UI.WebControls.Label Label5;
 
         /// <summary>
-        /// Controle btn1.
+        /// Controle txtTempo.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn1;
+        protected global::System.Web.UI.WebControls.TextBox txtTempo;
 
         /// <summary>
-        /// Controle btn2.
+        /// Controle Label6.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn2;
+        protected global::System.Web.UI.WebControls.Label Label6;
 
         /// <summary>
-        /// Controle btn3.
+        /// Controle txtDescricao.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn3;
+        protected global::System.Web.UI.WebControls.TextBox txtDescricao;
 
         /// <summary>
-        /// Controle btnFuncao.
+        /// Controle btnSalvar.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnFuncao;
+        protected global::System.Web.UI.WebControls.Button btnSalvar;
 
         /// <summary>
-        /// Controle btn0.
+        /// Controle lblMensagem.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn0;
-
-        /// <summary>
-        /// Controle btnPotencia.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPotencia;
-
-        /// <summary>
-        /// Controle btnCancelar.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancelar;
-
-        /// <summary>
-        /// Controle btnComecar.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnComecar;
-
-        /// <summary>
-        /// Controle lblPotencia.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPotencia;
-
-        /// <summary>
-        /// Controle lblTempoPotencia.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTempoPotencia;
-
-        /// <summary>
-        /// Controle gvProgramacoes.
-        /// </summary>
-        /// <remarks>
-        /// Campo gerado automaticamente.
-        /// Para modificar, mova a declaração de campo do arquivo de designer a um arquivo code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvProgramacoes;
+        protected global::System.Web.UI.WebControls.Label lblMensagem;
     }
 }
