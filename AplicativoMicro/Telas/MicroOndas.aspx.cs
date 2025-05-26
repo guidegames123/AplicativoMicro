@@ -279,6 +279,7 @@ namespace AplicativoMicro
                 lblTempoPotencia.Text += "Aquecimento concluido";
                 programa_rapido = false;
                 SalvaEstado();
+                bloquearBotoes();
                 return;
             }
 
@@ -328,7 +329,7 @@ namespace AplicativoMicro
                 lblPotencia.Text = "Potência: 10";
                 input = false;
                 pausa = false;
-                
+                bloquearBotoes();
                 SalvaEstado();
                 return;
             }
